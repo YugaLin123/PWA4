@@ -3,8 +3,8 @@
   "background_color": "#2196f3",
   "display": "standalone",
   "scope": "/",
-  "short_name": "CKedit!",
-  "name": "CKedit!",
+  "short_name": "AAA",
+  "name": "aaa",
   "icons": [
     {
       "src": "/images/icons8-gas-48.png",
@@ -22,5 +22,5 @@
       "sizes": "144x144"
     }
   ],
-  "start_url": "."
+  "start_url": ".",
 }
