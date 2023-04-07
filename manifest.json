@@ -3,8 +3,8 @@
   "background_color": "#2196f3",
   "display": "standalone",
   "scope": "/",
-  "short_name": "CKedit!",
-  "name": "CKedit!",
+  "short_name": "PWATEST!",
+  "name": "PWATEST!",
   "icons": [
     {
       "src": "/images/icons8-gas-48.png",
