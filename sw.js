@@ -1,23 +1,23 @@
 
-self.addEventListener('push', event => {
-  console.log('[Service Worker] 已收到 Push');
-  let title = 'Server Push';
-  let options = {
-    body: 'push TEST',
-    icon: '/img/icons/android-chrome-512x512.png',
-  };
-  if (event.data) {
-    options = event.data.json();
-    title = options.title;
-  }
-  event.waitUntil(self.registration.showNotification(title, options));
-});
+
+// 安裝 
 self.addEventListener('install', event => {
   self.skipWaiting(); //異動過的程式能夠立即更新
   console.log('[ServiceWorker] Install');
 });
+// 啟動 
+self.addEventListener('activate', event => {
+  event.waitUntil(clients.claim());
+});
+
+// 存取 
+self.addEventListener('fetch', event => {
+  console.log('[ServiceWorker] fetch', event.request);
+});
+
 self.addEventListener('notificationclick', event => {
   console.log('點按了通知 notificationclick')
+  console.log(event)
   const notification = event.notification;
   const action = event.action;
   const type = notification.data.type
