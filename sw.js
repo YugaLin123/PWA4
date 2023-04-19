@@ -1,7 +1,10 @@
+importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js')
+importScripts(
+  'https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js'
+)
 import { onBackgroundMessage } from 'firebase/messaging/sw'
 import { initializeApp } from "firebase/app";
 import { getMessaging } from "firebase/messaging";
-
 const firebaseApp = initializeApp({
   apiKey: "AIzaSyDEYWHma9rEroGOs5XYe8gZaDax8TIWRMo",
   authDomain: "test-58de1.firebaseapp.com",

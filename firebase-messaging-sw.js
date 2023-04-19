@@ -1,4 +1,7 @@
-// Initialize the Firebase app in the service worker by passing the generated config
+import { initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging/sw";
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyDEYWHma9rEroGOs5XYe8gZaDax8TIWRMo",
   authDomain: "test-58de1.firebaseapp.com",
@@ -9,18 +12,21 @@ const firebaseConfig = {
   appId: "1:439805881996:web:41a120bee954577e1895a9"
 };
 
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+const VAPID_KEY = 'BCn-idO9957h3uKL4NDyjLZgm8Xh9_wWFAu0oQEgiDwXzZpv4oui3Iw3MTZd7T2iUZzarv_H-rRZZwlAHkVu0bo'
+getToken(messaging, {vapidKey: VAPID_KEY}).then((currentToken) => {
+  console.log('getToken-firebase-Messaging-sw')
+  console.log(currentToken)
+}).catch((err) => { console.log('檢索token時出錯', err);})
 
-// Retrieve firebase messaging
-const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage(function(payload) {
-  console.log("Received background message ", payload);
 
-  const notificationTitle = payload.notification.title;
-  const notificationOptions = {
-    body: payload.notification.body,
+self.addEventListener("push", (event) => {
+  const payload = event.data.json();
+  const { title, body } = payload.notification;
+  const options = {
+    body,
   };
-
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  event.waitUntil(self.registration.showNotification(title, options));
 });
