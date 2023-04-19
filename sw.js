@@ -1,14 +1,8 @@
-// 導入 Firebase 库
-importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js')
-importScripts(
-  'https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js'
-)
 import { onBackgroundMessage } from 'firebase/messaging/sw'
+import { initializeApp } from "firebase/app";
+import { getMessaging } from "firebase/messaging";
 
-
-// 初始化 Firebase App
-firebase.initializeApp({
-  // your app configuration
+const firebaseApp = initializeApp({
   apiKey: "AIzaSyDEYWHma9rEroGOs5XYe8gZaDax8TIWRMo",
   authDomain: "test-58de1.firebaseapp.com",
   databaseURL: "https://test-58de1-default-rtdb.firebaseio.com",
@@ -18,8 +12,9 @@ firebase.initializeApp({
   appId: "1:439805881996:web:41a120bee954577e1895a9"
 });
 
-// 初始化 Firebase Messaging
-const messaging = firebase.messaging();
+// Retrieve an instance of Firebase Messaging so that it can handle background
+// messages.
+const messaging = getMessaging(firebaseApp);
 
 onBackgroundMessage(messaging, ({ notification }) => {
   const { title, body, image } = notification ?? {}
