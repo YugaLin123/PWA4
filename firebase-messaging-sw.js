@@ -1,36 +1,38 @@
-import { initializeApp } from 'firebase/app';
-import { getMessaging, onMessage } from 'firebase/messaging';
-import { onBackgroundMessage } from "firebase/messaging/sw";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyDEYWHma9rEroGOs5XYe8gZaDax8TIWRMo",
-    authDomain: "test-58de1.firebaseapp.com",
-    databaseURL: "https://test-58de1-default-rtdb.firebaseio.com",
-    projectId: "test-58de1",
-    storageBucket: "test-58de1.appspot.com",
-    messagingSenderId: "439805881996",
-    appId: "1:439805881996:web:41a120bee954577e1895a9"
+importScripts('https://www.gstatic.com/firebasejs/9.18.0/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/9.18.0/firebase-messaging-compat.js');
+var FIREBASE_CONFIG = {
+apiKey: "AIzaSyDEYWHma9rEroGOs5XYe8gZaDax8TIWRMo",
+authDomain: "test-58de1.firebaseapp.com",
+databaseURL: "https://test-58de1-default-rtdb.firebaseio.com",
+projectId: "test-58de1",
+storageBucket: "test-58de1.appspot.com",
+messagingSenderId: "439805881996",
+appId: "1:439805881996:web:41a120bee954577e1895a9"
 };
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
-
-// 前景
-onMessage(messaging, (payload) => {
-  console.log('Message received:', payload);
-});
-onBackgroundMessage(messaging, (payload) => {
-    console.log('[firebase-messaging-sw.js] Received background message ', payload);
+// Initialize Firebase
+firebase.initializeApp(FIREBASE_CONFIG);
+const messaging = firebase.messaging();
+messaging.onMessage((payload) => {
+    console.log('[firebase-messaging-sw.js] onMessage: ', payload);
+    // ...
+  });
+messaging.onBackgroundMessage((payload) => {
+    console.log(
+      '[firebase-messaging-sw.js] Received background message ',
+      payload
+    );
     // Customize notification here
     const notificationTitle = 'Background Message Title';
     const notificationOptions = {
       body: 'Background Message body.',
-      icon: 'images/144x144.png'
+      icon: '/firebase-logo.png'
     };
   
-    self.registration.showNotification(notificationTitle,
-      notificationOptions);
+    self.registration.showNotification(notificationTitle, notificationOptions);
   });
+  
 // const app = initializeApp(firebaseConfig);
 // const messaging = getMessaging(app);
 // getToken(messaging, {vapidKey: 'BCn-idO9957h3uKL4NDyjLZgm8Xh9_wWFAu0oQEgiDwXzZpv4oui3Iw3MTZd7T2iUZzarv_H-rRZZwlAHkVu0bo'}).then((currentToken) => {
